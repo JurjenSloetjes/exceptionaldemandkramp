@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Exceptional Demand Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Barlow Condensed', sans-serif;
+            background-color: #f0f4f8;
+            font-weight: 400; /* Regular */
+        }
+        h1, h2, h3, h4, strong, .font-bold {
+            font-weight: 700; /* Bold */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .material-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%; /* Make cards in a grid have same height */
+        }
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        /* Custom table styles to match original intent within the new theme */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* Tailwind's border-gray-200 */
+            padding: 8px;
+            text-align: left;
+        }
+        thead th {
+            background-color: #f1f5f9; /* Tailwind's bg-gray-100 */
+        }
+    </style>
+</head>
+<body class="text-black">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header styled like the reference document -->
+        <header class="text-center mb-12 p-8 md:p-12 rounded-lg" style="background-color: #9B1915;">
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight uppercase">EXCEPTIONAL DEMAND ANALYSIS</h1>
+            <p class="text-lg text-gray-200 mt-2 max-w-3xl mx-auto font-normal">Detecting, understanding, and leveraging unusual demand patterns for strategic insights.</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <!-- Introduction & Goal Section -->
+            <section class="material-card md:col-span-2 lg:col-span-4">
+                <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Understanding Exceptional Demand</h2>
+                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">
+                    Exceptional demand analysis highlights significant deviations in demand. The primary goal is to empower users with actionable insights by revealing where demand truly deviates from expected patterns, helping pinpoint real stock shortages versus other operational delays. Understanding these exceptional events is crucial for optimizing supply chain operations and maximizing customer satisfaction.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                     <div class="bg-gray-100 p-6 rounded-lg text-center">
+                        <div class="text-6xl text-center text-[#9B1915] mb-4">📈</div>
+                        <h3 class="text-2xl mb-2 text-black font-bold">Proactive Decision-Making</h3>
+                        <p class="text-center text-gray-800 font-normal">
+                            Quickly identify and act on demand shifts for proactive decision-making. It's your early warning system for market shifts.
+                        </p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg text-center">
+                        <div class="text-6xl text-center text-[#FFB332] mb-4">🎯</div>
+                        <h3 class="text-2xl text-center mb-2 text-black font-bold">Targeted Improvements</h3>
+                        <p class="text-center text-gray-800 font-normal">
+                            By effectively identifying exceptional demand, this analysis enables targeted improvements, enhances supply chain efficiency, and boosts customer satisfaction.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dynamic Thresholds Section -->
+            <section class="material-card md:col-span-2 lg:col-span-4">
+                <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">How Exceptional Demand is Detected</h2>
+                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Exceptional demand is identified using a <strong class="bg-[#9B1915] text-white px-2 rounded">dynamic threshold</strong> for each product. This threshold is calculated as: Product's Average Demand + (Multiplier &times; standarddeviation). The "Multiplier" increases with more historical data, making the threshold wider for well-established products. Items with 0 to 4 orderlines are always considered not exceptional. This ensures that only truly significant deviations are flagged as "exceptional," preventing false alerts.</p>
+                <div class="chart-container h-[300px] max-h-[300px]">
+                    <canvas id="drempelChart"></canvas>
+                </div>
+                <p class="text-sm text-center mt-4 text-gray-600 font-normal">The chart shows how the multiplier for standard deviation changes with historical orders, creating a more reliable baseline for detecting true exceptions.</p>
+            </section>
+            
+            <!-- Practical Example Section -->
+            <section class="material-card md:col-span-2 lg:col-span-4">
+                <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Practical Example: How is Demand Determined?</h2>
+                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Let's illustrate how a single demand event is categorized as exceptional or not, using a hypothetical product with 8 historical order lines.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-base mb-4 font-normal">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Average Demand</th>
+                                <th>Demand Variability (Std. Dev.)</th>
+                                <th>Multiplier (8 lines)</th>
+                                <th>Calculated Threshold</th>
+                                <th>Requested Quantity</th>
+                                <th>Outcome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold">Product A</td>
+                                <td>100 units</td>
+                                <td>10 units</td>
+                                <td>2.03</td>
+                                <td class="font-bold">120.3 units (100 + 2.03 * 10)</td>
+                                <td>130 units</td>
+                                <td class="font-bold text-red-600">EXCEPTIONAL</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Product A</td>
+                                <td>100 units</td>
+                                <td>10 units</td>
+                                <td>2.03</td>
+                                <td class="font-bold">120.3 units</td>
+                                <td>110 units</td>
+                                <td class="font-bold text-green-600">NOT EXCEPTIONAL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-sm text-center mt-4 text-gray-600 font-normal">This table shows how the dynamic threshold determines if a specific demand quantity is considered exceptional.</p>
+            </section>
+
+            <!-- Aggregation Section -->
+            <section class="material-card md:col-span-2 lg:col-span-4">
+                <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Aggregating the Results: The Big Picture</h2>
+                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">
+                    While individual lines are flagged, the overall impact is measured by aggregating these results. The total quantity from all exceptional order lines is summed and compared against the total requested quantity across all lines to determine the overall percentage of demand that was exceptional.
+                </p>
+                <div class="max-w-2xl mx-auto bg-gray-100 p-6 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold text-black mb-4">Example Aggregation</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-lg">
+                        <div>
+                            <p class="font-normal text-gray-600">Total Requested</p>
+                            <p class="font-bold text-2xl">240 Units</p>
+                            <p class="text-sm font-normal">(130 + 110)</p>
+                        </div>
+                        <div>
+                            <p class="font-normal text-gray-600">Total Exceptional</p>
+                            <p class="font-bold text-2xl text-red-600">130 Units</p>
+                             <p class="text-sm font-normal">(From the exceptional line only)</p>
+                        </div>
+                        <div>
+                            <p class="font-normal text-gray-600">Exceptional Demand %</p>
+                            <p class="font-bold text-2xl text-red-600">54.2%</p>
+                            <p class="text-sm font-normal">(130 / 240)</p>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-700 mt-6 font-normal">This percentage gives a clear, high-level view of how much of the total demand is deviating from the norm, helping to prioritize investigations and strategic actions.</p>
+                </div>
+            </section>
+
+            <!-- CONSOLIDATED Data Filtering Section -->
+            <section class="material-card md:col-span-2 lg:col-span-4">
+                <h2 class="text-3xl font-bold text-black mb-6 text-center uppercase">Key Data Filters & Analysis Scope</h2>
+                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">The accuracy of this analysis depends on strict data quality rules. The table below outlines the main criteria used to include or exclude transactions to ensure the analysis focuses on true external customer demand. To maintain this focus, certain orders like internal stock movements and special non-product types are also intentionally excluded.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left font-normal">
+                        <thead class="bg-gray-800 text-white uppercase">
+                            <tr>
+                                <th class="p-3">Filter Category</th>
+                                <th class="p-3">Description</th>
+                                <th class="p-3">Action</th>
+                                <th class="p-3">Reasoning</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="border-b">
+                                <td class="p-3 font-bold">Requested Date</td>
+                                <td class="p-3">Transactions from a specific date onwards (e.g., May 1, 2024)</td>
+                                <td class="p-3 text-green-600 font-bold">Included</td>
+                                <td class="p-3">Defines the analysis period.</td>
+                            </tr>
+                            <tr class="border-b bg-gray-50">
+                                <td class="p-3 font-bold">Exclude Setting</td>
+                                <td class="p-3">Internal settings (e.g., standard orders, direct shipments, certain manual exclusions)</td>
+                                <td class="p-3 text-green-600 font-bold">Included</td>
+                                <td class="p-3">Relevant demand types for this analysis.</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold">Transaction Type</td>
+                                <td class="p-3">Demo orders, returns, specific dropshipments, assemble-to-stock orders</td>
+                                <td class="p-3 text-red-600 font-bold">Excluded</td>
+                                <td class="p-3">Not considered core customer demand.</td>
+                            </tr>
+                            <tr class="border-b bg-gray-50">
+                                <td class="p-3 font-bold">Internal Sales (UD3)</td>
+                                <td class="p-3">'Internal Sales' (with specific system exceptions included)</td>
+                                <td class="p-3 text-red-600 font-bold">Excluded (with exception)</td>
+                                <td class="p-3">Focuses on external demand.</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold">Other UD3 Categories</td>
+                                <td class="p-3">'Purchase (Assembly)', 'Rest'</td>
+                                <td class="p-3 text-red-600 font-bold">Excluded</td>
+                                <td class="p-3">Additional internal or non-demand related exclusions.</td>
+                            </tr>
+                            <tr class="border-b bg-gray-50">
+                                <td class="p-3 font-bold">Call-off Orders</td>
+                                <td class="p-3">Orders identified as 'call-off' types</td>
+                                <td class="p-3 text-red-600 font-bold">Excluded</td>
+                                <td class="p-3">Not part of standard, repeatable demand.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">Non-Stocked Items</td>
+                                <td class="p-3">Items not managed in stock</td>
+                                <td class="p-3 text-red-600 font-bold">Excluded</td>
+                                <td class="p-3">Analysis focuses on demand for stocked items.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+             <!-- Business Value Section -->
+            <section class="material-card md:col-span-2 lg:col-span-4">
+                 <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Business Value & Actionable Insights</h2>
+                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Exceptional demand analysis transforms raw data into actionable insights, offering a nuanced understanding of demand behavior that drives real business value.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">📦</div> <h4 class="font-bold text-black text-lg">Proactive Inventory Management</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Anticipate shortages/overstocks. Adjust inventory levels to reduce costs and improve service.</p> </div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">📈</div> <h4 class="font-bold text-black text-lg">Refined Demand Forecasting</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Improve future demand forecasts and models based on insights.</p> </div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">🚚</div> <h4 class="font-bold text-black text-lg">Optimized Logistics & Operations</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Allocate resources more efficiently by knowing where/when demand peaks occur.</p> </div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">🚨</div> <h4 class="font-bold text-black text-lg">Early Warning System</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Sudden spikes act as early warnings for market shifts, prompting investigation.</p> </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer updated to match reference -->
+        <footer class="text-center mt-12 p-8 rounded-lg" style="background-color: #000000; color: #FFFFFF;">
+            <p>This infographic provides a visual summary of the Exceptional Demand Analysis.</p>
+            <p>&copy; 2025 Kramp. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Chart.js defaults from reference file to ensure consistent font styling
+        Chart.defaults.font.family = "'Barlow Condensed', sans-serif";
+        Chart.defaults.font.weight = '400';
+        Chart.defaults.color = '#000000';
+        
+        // Original Chart.js script from the demand analysis file
+        const vibrantProfessionalPalette = {
+            deepBlue: '#004AAD',
+            brightBlue: '#007BFF',
+            lightBlue: '#52A5FF',
+            lightGray: '#F5F5F5',
+            darkGray: '#333333'
+        };
+
+        const defaultChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: vibrantProfessionalPalette.darkGray,
+                        font: {
+                            size: 14,
+                            weight: '700' // Bold for legend
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: vibrantProfessionalPalette.darkGray },
+                    grid: { color: '#e0e0e0' }
+                },
+                x: {
+                    ticks: { color: vibrantProfessionalPalette.darkGray },
+                    grid: { display: false }
+                }
+            }
+        };
+
+        const barColors = [
+            '#004AAD', '#005CBF', '#006ED4', '#007BFF', '#228BFF',
+            '#459AFF', '#68AFFF', '#8BBFFF', '#AEE0FF', '#D1F0FF'
+        ];
+
+        new Chart(document.getElementById('drempelChart'), {
+            type: 'bar',
+            data: {
+                labels: ['5', '6', '7', '8', '9', '10', '11', '12+'],
+                datasets: [{
+                    label: 'Standard Deviation Multiplier',
+                    data: [1.57, 1.72, 1.88, 2.03, 2.18, 2.34, 2.49, 2.65],
+                    backgroundColor: barColors.slice(0, 8),
+                    borderColor: vibrantProfessionalPalette.deepBlue,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    legend: {
+                        display: false
+                    }
+                },
+                 scales: {
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        title: { 
+                            display: true,
+                            text: 'Multiplier',
+                            color: vibrantProfessionalPalette.darkGray,
+                             font: {
+                                weight: '700' // Bold
+                            }
+                        }
+                    },
+                    x: {
+                        ...defaultChartOptions.scales.x,
+                        title: {
+                            display: true,
+                            text: 'Number of Historical Order Lines',
+                            color: vibrantProfessionalPalette.darkGray,
+                             font: {
+                                weight: '700' // Bold
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -98,7 +98,7 @@
             <!-- Dynamic Thresholds Section -->
             <section class="material-card md:col-span-2 lg:col-span-4">
                 <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">How Exceptional Demand is Detected</h2>
-                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Exceptional demand is identified using a <strong class="bg-[#9B1915] text-white px-2 rounded">dynamic threshold</strong> for each product. This threshold is calculated as: Product's Average Demand + (Multiplier &times; standarddeviation). The "Multiplier" increases with more historical data, making the threshold wider for well-established products. Items with 0 to 4 orderlines are always considered not exceptional. This ensures that only truly significant deviations are flagged as "exceptional," preventing false alerts.</p>
+                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Exceptional demand is identified using a <strong class="bg-[#9B1915] text-white px-2 rounded">dynamic threshold</strong> for each product, based on data over the last 12 months. This threshold is calculated as: Product's Average Demand + (Multiplier &times; standarddeviation). The "Multiplier" increases with more historical data, making the threshold wider for well-established products. Items with 0 to 3 orderlines are always considered not exceptional. This ensures that only truly significant deviations are flagged as "exceptional," preventing false alerts.</p>
                 <div class="chart-container h-[300px] max-h-[300px]">
                     <canvas id="drempelChart"></canvas>
                 </div>
@@ -182,7 +182,7 @@
                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">The accuracy of this analysis depends on strict data quality rules. The table below outlines the main criteria used to include or exclude transactions to ensure the analysis focuses on true external customer demand. To maintain this focus, certain orders like internal stock movements and special non-product types are also intentionally excluded.</p>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left font-normal">
-                        <thead class="bg-gray-800 text-white uppercase">
+                        <thead class="bg-gray-100 text-black uppercase">
                             <tr>
                                 <th class="p-3">Filter Category</th>
                                 <th class="p-3">Description</th>
@@ -322,11 +322,11 @@
         new Chart(document.getElementById('drempelChart'), {
             type: 'bar',
             data: {
-                labels: ['5', '6', '7', '8', '9', '10', '11', '12+'],
+                labels: ['4', '5', '6', '7', '8', '9', '10', '11', '12+'], // Updated labels
                 datasets: [{
                     label: 'Standard Deviation Multiplier',
-                    data: [1.57, 1.72, 1.88, 2.03, 2.18, 2.34, 2.49, 2.65],
-                    backgroundColor: barColors.slice(0, 8),
+                    data: [1.42, 1.67, 1.90, 2.04, 2.20, 2.32, 2.44, 2.55, 2.65], // Updated data
+                    backgroundColor: barColors.slice(0, 9), // Adjusted slice for 9 bars
                     borderColor: vibrantProfessionalPalette.deepBlue,
                     borderWidth: 1
                 }]

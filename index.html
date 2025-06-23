@@ -75,7 +75,7 @@
             <section class="material-card md:col-span-2 lg:col-span-4">
                 <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Understanding Exceptional Demand</h2>
                  <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">
-                    Exceptional demand analysis highlights significant deviations in demand. The primary goal is to empower users with actionable insights by revealing where demand truly deviates from expected patterns, helping pinpoint real stock shortages versus other operational delays. Understanding these exceptional events is crucial for optimizing supply chain operations and maximizing customer satisfaction.
+                    Exceptional demand analysis highlights significant deviations in demand. The primary goal is to empower users with actionable insights by revealing where demand truly deviates from expected patterns, helping pinpoint real stock shortages versus other operational delays. Understanding these exceptional events is crucial for improving future forecasts without overreacting to rare events.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                      <div class="bg-gray-100 p-6 rounded-lg text-center">
@@ -98,7 +98,7 @@
             <!-- Dynamic Thresholds Section -->
             <section class="material-card md:col-span-2 lg:col-span-4">
                 <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">How Exceptional Demand is Detected</h2>
-                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Exceptional demand is identified using a <strong class="bg-[#9B1915] text-white px-2 rounded">dynamic threshold</strong> for each product, based on data over the last 12 months. This threshold is calculated as: Product's Average Demand + (Multiplier &times; standarddeviation). The "Multiplier" increases with more historical data, making the threshold wider for well-established products. Items with 0 to 3 orderlines are always considered not exceptional. This ensures that only truly significant deviations are flagged as "exceptional," preventing false alerts.</p>
+                <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Exceptional demand is identified using a <strong class="bg-[#9B1915] text-white px-2 rounded">dynamic threshold</strong> for each product, based on data over the last 12 months. This threshold is calculated as: Product's Average Demand + (Multiplier &times; Standard Deviation). This multiplier is conceptually similar to a Z-value, a proven statistical method for detecting outliers that is also used in inventory management systems like Slim4. The "Multiplier" increases with more historical data, making the threshold wider for well-established products. Items with 0 to 3 order lines are always considered not exceptional. This ensures that only truly significant deviations are flagged as "exceptional," preventing false alerts.</p>
                 <div class="chart-container h-[300px] max-h-[300px]">
                     <canvas id="drempelChart"></canvas>
                 </div>
@@ -246,7 +246,7 @@
                     <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">📦</div> <h4 class="font-bold text-black text-lg">Proactive Inventory Management</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Anticipate shortages/overstocks. Adjust inventory levels to reduce costs and improve service.</p> </div>
                     <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">📈</div> <h4 class="font-bold text-black text-lg">Refined Demand Forecasting</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Improve future demand forecasts and models based on insights.</p> </div>
                     <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">🚚</div> <h4 class="font-bold text-black text-lg">Optimized Logistics & Operations</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Allocate resources more efficiently by knowing where/when demand peaks occur.</p> </div>
-                    <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">🚨</div> <h4 class="font-bold text-black text-lg">Early Warning System</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Sudden spikes act as early warnings for market shifts, prompting investigation.</p> </div>
+                    <div class="p-4 rounded-lg bg-gray-50 shadow-sm"> <div class="text-4xl mb-2">⚠️</div> <h4 class="font-bold text-black text-lg">Early Warning System</h4> <p class="font-normal text-gray-700 mt-1 text-sm">Sudden spikes act as early warnings for market shifts, prompting investigation.</p> </div>
                 </div>
             </section>
         </main>
@@ -355,7 +355,7 @@
                         ...defaultChartOptions.scales.x,
                         title: {
                             display: true,
-                            text: 'Number of Historical Order Lines',
+                            text: 'Number of Historical Order Lines (last 12 months)',
                             color: vibrantProfessionalPalette.darkGray,
                              font: {
                                 weight: '700' // Bold

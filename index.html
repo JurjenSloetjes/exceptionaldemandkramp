@@ -108,7 +108,7 @@
             <!-- Practical Example Section -->
             <section class="material-card md:col-span-2 lg:col-span-4">
                 <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Practical Example: How is Demand Determined?</h2>
-                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Let's illustrate how a single demand event is categorized as exceptional or not, using a hypothetical product with 8 historical order lines.</p>
+                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">Let's illustrate how a single demand event is categorized as exceptional or not, using a hypothetical product with 8 historical order lines, where 2 of these orderlines occured in January.</p>
                 <div class="overflow-x-auto">
                     <table class="w-full text-base mb-4 font-normal">
                         <thead>
@@ -151,23 +151,23 @@
             <section class="material-card md:col-span-2 lg:col-span-4">
                 <h2 class="text-3xl font-bold text-black mb-4 text-center uppercase">Aggregating the Results: The Big Picture</h2>
                 <p class="text-center text-gray-700 mb-8 max-w-4xl mx-auto font-normal">
-                    While individual lines are flagged, the overall impact is measured by aggregating these results. The total quantity from all exceptional order lines is summed and compared against the total requested quantity across all lines to determine the overall percentage of demand that was exceptional.
+                    While individual lines are flagged, the overall impact is measured by aggregating these results. The total quantity from all exceptional order lines is summed and compared against the total requested quantity across all lines to determine the overall percentage of demand that was exceptional. In the example below, we show the Exceptional demand aggregated for the 2 orderlines in January.
                 </p>
                 <div class="max-w-2xl mx-auto bg-gray-100 p-6 rounded-lg text-center">
                     <h3 class="text-2xl font-bold text-black mb-4">Example Aggregation</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-lg">
                         <div>
-                            <p class="font-normal text-gray-600">Total Requested</p>
+                            <p class="font-normal text-gray-600">Total Requested January</p>
                             <p class="font-bold text-2xl">240 Units</p>
                             <p class="text-sm font-normal">(130 + 110)</p>
                         </div>
                         <div>
-                            <p class="font-normal text-gray-600">Total Exceptional</p>
+                            <p class="font-normal text-gray-600">Total Exceptional January</p>
                             <p class="font-bold text-2xl text-red-600">130 Units</p>
                              <p class="text-sm font-normal">(From the exceptional line only)</p>
                         </div>
                         <div>
-                            <p class="font-normal text-gray-600">Exceptional Demand %</p>
+                            <p class="font-normal text-gray-600">Exceptional Demand % January</p>
                             <p class="font-bold text-2xl text-red-600">54.2%</p>
                             <p class="text-sm font-normal">(130 / 240)</p>
                         </div>
